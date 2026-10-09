@@ -146,26 +146,21 @@ let Database = {
 
         // Method to delete a specific completed quest by its coordinates
         delete: function (latitude, longitude) {
-            Database.db.collection(this.tableName).doc({
+            return Database.db.collection(this.tableName).doc({
                 latitude: latitude,
                 longitude: longitude
             }).delete();
         },
 
         // Method to delete all completed quests that are older than the respawn time
-        deleteAllOld: function () {
-            let timeNowMin = new Date().getTime() / 60000;
-            this.get().then(questArray => {
-                if (questArray == null) {
-                    return;
-                }
-                questArray.forEach(entry => {
-                    let ageMin = timeNowMin - entry.timeMin;
-                    if (ageMin > Settings.Quest.RESPAWN_MIN) {
-                        this.delete(entry.latitude, entry.longitude);
-                    }
-                });
-            });
+        deleteAllOld: async function () {
+            const timeNowMin = new Date().getTime() / 60000;
+            const questArray = await this.get();
+            if (questArray == null) {
+                return;
+            }
+            const expired = questArray.filter(entry => timeNowMin - entry.timeMin > Settings.Quest.RESPAWN_MIN);
+            await Promise.all(expired.map(entry => this.delete(entry.latitude, entry.longitude)));
         }
     }
 }

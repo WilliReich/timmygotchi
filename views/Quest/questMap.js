@@ -71,22 +71,22 @@ export default class QuestMap {
 
     // Method to load and display quest markers within a specified radius
     async #loadQuestMarker(radiusMeter) {
-        // Delete old quest records from the database
-        Database.QuestsDone.deleteAllOld();
+        // Delete expired quest records first, so respawned quests show up again
+        await Database.QuestsDone.deleteAllOld();
         // Fetch new quest positions from the server within the specified radius
-        return await ConnectionsApi.SmartAirQuality.getPosArray(radiusMeter).then(pointsArray => {
-            pointsArray.forEach(point => {
-                // Check if the quest at this location is already completed
-                Database.QuestsDone.has(point.latitude, point.longitude).then(hasQuest => {
-                    if (!hasQuest) {
-                        // Create and display a new quest marker on the map
-                        const questMarker = this.#createQuestMarker(point);
-                        this.#questMarkerArray.push(questMarker);
-                        questMarker.radiusCircle.addTo(this.#map);
-                        questMarker.addTo(this.#map);
-                    }
-                });
-            });
+        const pointsArray = await ConnectionsApi.SmartAirQuality.getPosArray(radiusMeter);
+        // Check for every position whether the quest is already completed
+        const isDoneArray = await Promise.all(
+            pointsArray.map(point => Database.QuestsDone.has(point.latitude, point.longitude))
+        );
+        pointsArray.forEach((point, index) => {
+            if (!isDoneArray[index]) {
+                // Create and display a new quest marker on the map
+                const questMarker = this.#createQuestMarker(point);
+                this.#questMarkerArray.push(questMarker);
+                questMarker.radiusCircle.addTo(this.#map);
+                questMarker.addTo(this.#map);
+            }
         });
     };
 
