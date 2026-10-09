@@ -83,9 +83,9 @@ export default class ViewSensor extends View {
         }
 
         if (ConnectionsDevice.Sensor.sensorMAC != null) {
-            this.#valueSensorMAC.innerHTML = ConnectionsDevice.Sensor.sensorMAC;
+            this.#valueSensorMAC.textContent = ConnectionsDevice.Sensor.sensorMAC;
         } else {
-            this.#valueSensorMAC.innerHTML = "unknown";
+            this.#valueSensorMAC.textContent = "unknown";
         }
     }
 }

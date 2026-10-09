@@ -87,9 +87,9 @@ export default class ViewGPS extends View {
         } else {
             this.#mapContainer.style.visibility = 'hidden';
         }
-        this.#displayLatitude.innerHTML = lat;
-        this.#displayLongitude.innerHTML = long;
-        this.#displayAltitude.innerHTML = alt;
+        this.#displayLatitude.textContent = lat;
+        this.#displayLongitude.textContent = long;
+        this.#displayAltitude.textContent = alt;
     }
 
     resize() {

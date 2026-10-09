@@ -94,8 +94,8 @@ export default class ViewSettings extends View {
             name = "unknown";
         }
 
-        this.#playerIdValue.innerHTML = id;
-        this.#playerNameValue.innerHTML = name;
+        this.#playerIdValue.textContent = id;
+        this.#playerNameValue.textContent = name;
     }
 
     show() {

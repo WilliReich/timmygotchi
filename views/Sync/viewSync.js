@@ -44,12 +44,12 @@ export default class ViewSync extends View {
 
     #showData() {
         let stats = this.#synchronizer.getStats();
-        this.#valueSessions.innerHTML = stats.sessionCount;
-        this.#valueDataCount.innerHTML = stats.dataStored;
-        this.#valueSyncCount.innerHTML = stats.dataSync;
+        this.#valueSessions.textContent = stats.sessionCount;
+        this.#valueDataCount.textContent = stats.dataStored;
+        this.#valueSyncCount.textContent = stats.dataSync;
 
-        this.#valueDistance.innerHTML = stats.distance.toFixed(1) + "km";
-        this.#valueAltitude.innerHTML = stats.altitude.toFixed(1) + "m";
-        this.#valueScore.innerHTML = stats.score;
+        this.#valueDistance.textContent = stats.distance.toFixed(1) + "km";
+        this.#valueAltitude.textContent = stats.altitude.toFixed(1) + "m";
+        this.#valueScore.textContent = stats.score;
     }
 }

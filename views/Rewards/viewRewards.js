@@ -45,7 +45,7 @@ export default class ViewRewards extends View {
     }
 
     #showRewards() {
-        this.#valueRewardsNormal.innerHTML = this.#rewards.getNormalCount();
-        this.#valueRewardsBonus.innerHTML = this.#rewards.getBonusCount();
+        this.#valueRewardsNormal.textContent = this.#rewards.getNormalCount();
+        this.#valueRewardsBonus.textContent = this.#rewards.getBonusCount();
     };
 }

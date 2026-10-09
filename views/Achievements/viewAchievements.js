@@ -108,7 +108,7 @@ export default class ViewAchievements extends View {
         if (score == null) {
             score = -1;
         }
-        htmlName.innerHTML = name;
-        htmlScore.innerHTML = score;
+        htmlName.textContent = name;
+        htmlScore.textContent = score;
     }
 }

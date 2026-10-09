@@ -152,7 +152,7 @@ export default class ViewQuest extends View {
     #showCountdown(countdown) {
         this.#questInfoContainer.style.visibility = 'collapse';
         this.#questCountdownContainer.style.visibility = 'visible';
-        this.#displayQuestCountdown.innerHTML = "COUNTDOWN:  " + countdown.toFixed(0);
+        this.#displayQuestCountdown.textContent = "COUNTDOWN:  " + countdown.toFixed(0);
     };
 
     #showMenuBottom() {
@@ -161,9 +161,9 @@ export default class ViewQuest extends View {
 
         let distance = this.#activeQuest.getDistance();
         if (distance >= 0) {
-            this.#valueClosestDistance.innerHTML = distance.toFixed(0) + ' m';
+            this.#valueClosestDistance.textContent = distance.toFixed(0) + ' m';
         } else {
-            this.#valueClosestDistance.innerHTML = 'unknown';
+            this.#valueClosestDistance.textContent = 'unknown';
         }
     };
 }
