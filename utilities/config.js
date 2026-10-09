@@ -31,6 +31,9 @@ const Config = {
 
     // Zoom level of the quest map in demo mode, close enough to watch the simulated walker
     demoMapZoom: 15,
+
+    // Speed factor for Timmy's needs in demo mode: 360 turns 12 hours into 2 minutes
+    demoNeedsSpeedFactor: 360,
 };
 
 export default Config;

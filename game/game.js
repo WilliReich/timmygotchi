@@ -2,6 +2,7 @@ import TimmyDB from "./manager/database.js";
 import Canvas from "./manager/canvas.js";
 import Needs from "./manager/needs.js";
 import Customize from "./manager/customize.js";
+import Config from "../utilities/config.js";
 
 import Background from "./layer/background.js";
 import Timmy from "./layer/timmy.js";
@@ -23,6 +24,10 @@ export default class Game {
 
     constructor(canvas) {
         Canvas.setup(canvas);
+        if (Config.isDemo) {
+            // demo mode: the needs drop within minutes instead of days
+            Needs.SPEED_FACTOR = Config.demoNeedsSpeedFactor;
+        }
         this.#loadSavedData();
 
         // Create instances for different game layers

@@ -1,5 +1,6 @@
 let Needs = {
     TICK_SEC: 10, // Interval in seconds between each update of needs
+    SPEED_FACTOR: 1, // > 1 lets the needs drop faster, the demo mode uses this
 
     // Configuration for each type of need
     FOOD: {
@@ -63,7 +64,7 @@ Needs.setup = function () {
 
 // Calculate how much a need decreases per tick
 Needs.calcSubtrahend = function (need) {
-    const subPerSecond = need.LIMIT / (need.LAST_HOURS * 3600);
+    const subPerSecond = need.LIMIT * Needs.SPEED_FACTOR / (need.LAST_HOURS * 3600);
     return (subPerSecond * Needs.TICK_SEC).toFixed(5);
 };
 
