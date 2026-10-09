@@ -106,18 +106,14 @@ Needs.calcPercent = function (need, value) {
     return 1 / need.LIMIT * Math.ceil(value);
 };
 
-// Get the number of days Timmy has lived
+// Get the number of days Timmy has lived, as a string for the HUD, capped at three digits
 Needs.getDaysLived = function () {
     const milliMin = 60000;
     const minDay = 1440;
-    const secondsNow = new Date().getTime() / milliMin;
+    const minutesNow = new Date().getTime() / milliMin;
 
-    let days = ((secondsNow - Needs.Timmy.BIRTHDAY_MIN) / minDay).toFixed(0);
-    if (days > '999') {
-        return '999'
-    } else {
-        return days;
-    }
+    const days = Math.round((minutesNow - Needs.Timmy.BIRTHDAY_MIN) / minDay);
+    return String(Math.min(days, 999));
 };
 
 
