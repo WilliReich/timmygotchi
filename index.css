@@ -119,3 +119,26 @@ body {
     background: url('images/icons/icon_achievements.png'), #99ded0;
     background-size: 100% 100%;
 }
+/* Toast messages, see utilities/toast.js */
+.toast {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 80%;
+    padding: 0.6em 1em;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    font-family: "Cooper Black", serif;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.toast.visible {
+    opacity: 1;
+}

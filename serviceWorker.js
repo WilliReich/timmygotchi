@@ -6,7 +6,7 @@
  * Requests go to the network first, so an online player always gets the
  * current files; the cache is the fallback when the network is unavailable.
  */
-const CACHE_NAME = "timmygotchi-v3";
+const CACHE_NAME = "timmygotchi-v4";
 
 const APP_FILES = [
     "./index.html",
@@ -53,6 +53,7 @@ const APP_FILES = [
 
     "./utilities/config.js",
     "./utilities/settings.js",
+    "./utilities/toast.js",
     "./utilities/map.js",
     "./utilities/display.js",
     "./utilities/database.js",

@@ -1,4 +1,5 @@
 import Display from "./utilities/display.js";
+import Toast from "./utilities/toast.js";
 import ConnectionsDevice from "./utilities/connections/device.js";
 import Database from "./utilities/database.js";
 import ViewAchievements from "./views/Achievements/viewAchievements.js";
@@ -84,7 +85,7 @@ export default class GUI {
             this.#viewSync.init(),
             this.#viewRewards.init(),
             this.#viewAchievements.init(),
-        ]).catch((error) => alert(error));
+        ]).catch((error) => Toast.show(error));
     }
 
     // Method that runs once all resources are loaded

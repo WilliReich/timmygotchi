@@ -1,4 +1,5 @@
 import GameAPI from "../../game/gameAPI.js";
+import Toast from "../toast.js";
 import Map from "../map.js";
 import Config from "../config.js";
 import Http from "./http.js";
@@ -224,7 +225,7 @@ let ConnectionsApi = {
                     }
                 });
             } catch (error) {
-                alert(error);
+                Toast.show(error);
             }
             return posArray;
         },

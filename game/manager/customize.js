@@ -1,4 +1,5 @@
 import SPRITES from "./sprites.js";
+import Toast from "../../utilities/toast.js";
 import TimmyDB from "./database.js";
 
 let Customize = {
@@ -46,7 +47,7 @@ Customize.unlockItem = function () {
         if(items != null) {
             let len = Customize.Items.lockedArray.length;
             if (len === 0) {
-                alert('no items to unlock');
+                Toast.show('no items to unlock');
                 return;
             }
 

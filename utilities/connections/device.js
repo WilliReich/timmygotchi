@@ -1,4 +1,5 @@
 import Settings from "../settings.js";
+import Toast from "../toast.js";
 import Config from "../config.js";
 import Http from "./http.js";
 
@@ -28,7 +29,7 @@ let ConnectionsDevice = {
             try {
                 const response = await Http.fetch(url);
                 if (!response.ok) {
-                    alert("connection failed");
+                    Toast.show("connection failed");
                     return;
                 }
                 const sysinfo = await response.json();
@@ -38,7 +39,7 @@ let ConnectionsDevice = {
                 ConnectionsDevice.Sensor.sensorMAC = sysinfo.mac;
                 ConnectionsDevice.GUI.connectionUpdate();
             } catch (error) {
-                alert(error);
+                Toast.show(error);
             }
         },
 
@@ -59,7 +60,7 @@ let ConnectionsDevice = {
             if (!ConnectionsDevice.Sensor.isConnected || ConnectionsDevice.Sensor.sensorIP == null) {
                 return;
             }
-            alert("please wait until sensor is shut down");
+            Toast.show("please wait until sensor is shut down");
             let url = "https://" + ConnectionsDevice.Sensor.sensorIP + ":8181/SmartBridge/smartbridge/bridge/execute?command=sh&file=/scripts/shutdown.sh";
             Http.fetch(url).then(response => {
                 // Reset sensor variables
@@ -85,7 +86,7 @@ let ConnectionsDevice = {
                 pmValues.pm2_5 = json.result.value["pm2.5"];
                 pmValues.pm10_0 = json.result.value["pm10.0"];
             } catch (error) {
-                alert(error);
+                Toast.show(error);
             }
             return pmValues;
         },
@@ -103,7 +104,7 @@ let ConnectionsDevice = {
                 const json = await response.json();
                 temp = json.result;
             } catch (error) {
-                alert(error);
+                Toast.show(error);
             }
             return temp;
         },
@@ -117,7 +118,7 @@ let ConnectionsDevice = {
         // Method to read the current GPS position
         read: function () {
             if (!navigator.geolocation) {
-                alert("Geolocation is not supported by this browser.");
+                Toast.show("Geolocation is not supported by this browser.");
                 return;
             }
             if (!Settings.Gps.isEnabled) {
@@ -151,16 +152,16 @@ let ConnectionsDevice = {
             ConnectionsDevice.GUI.connectionUpdate();
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
+                    Toast.show("User denied the request for Geolocation.");
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
+                    Toast.show("Location information is unavailable.");
                     break;
                 case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
+                    Toast.show("The request to get user location timed out.");
                     break;
                 default:
-                    alert("An unknown error occurred.");
+                    Toast.show("An unknown error occurred.");
             }
         }
     }

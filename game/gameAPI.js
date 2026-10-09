@@ -1,4 +1,5 @@
 import Canvas from "./manager/canvas.js";
+import Toast from "../utilities/toast.js";
 import TimmyDB from "./manager/database.js";
 import Needs from "./manager/needs.js";
 import Customize from "./manager/customize.js";
@@ -27,9 +28,9 @@ let GameAPI = {
         // Unlocks a reward
         unlockReward: function (isBonus) {
             if (isBonus) {
-                alert("bonus reward unlocked");
+                Toast.show("bonus reward unlocked");
             } else {
-                alert("reward unlocked");
+                Toast.show("reward unlocked");
             }
             Customize.unlockItem();
         }

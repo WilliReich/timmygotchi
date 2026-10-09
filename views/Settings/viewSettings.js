@@ -1,4 +1,5 @@
 import View from "../view.js";
+import Toast from "../../utilities/toast.js";
 import ConnectionsApi from "../../utilities/connections/api.js";
 import Settings from "../../utilities/settings.js";
 import Database from "../../utilities/database.js";
@@ -49,7 +50,7 @@ export default class ViewSettings extends View {
                     this.#savePlayer(id, name);
                     this.#showInfo();
                 } else {
-                    alert("Failed");
+                    Toast.show("Failed");
                 }
             });
         });
@@ -63,7 +64,7 @@ export default class ViewSettings extends View {
                     this.#savePlayer(id, name);
                     this.#showInfo();
                 } else {
-                    alert("Failed");
+                    Toast.show("Failed");
                 }
             });
         });

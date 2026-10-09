@@ -1,9 +1,11 @@
+import Toast from "../utilities/toast.js";
+
 const HTML = {
     get: async function (path) {
         try {
             const response = await fetch(path);
             if (!response.ok) {
-                alert("File not found: " + path)
+                Toast.show("File not found: " + path)
                 return Promise.reject();
             }
             const text = await response.text();

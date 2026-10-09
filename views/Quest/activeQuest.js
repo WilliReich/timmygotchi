@@ -1,4 +1,5 @@
 import ConnectionsApi from "../../utilities/connections/api.js";
+import Toast from "../../utilities/toast.js";
 import Settings from "../../utilities/settings.js";
 import Database from "../../utilities/database.js";
 
@@ -97,7 +98,7 @@ export default class ActiveQuest extends EventTarget {
         const timeNow = new Date();
         const isBonus = timesArray.some(targetTime => this.#isWithinInterval(timeNow, targetTime));
         if (isBonus) {
-            alert("Bonus quest complete");
+            Toast.show("Bonus quest complete");
         }
         return isBonus;
     };

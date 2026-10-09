@@ -1,4 +1,5 @@
 import Map from '../../utilities/map.js'
+import Toast from "../../utilities/toast.js";
 import ConnectionsApi from "../../utilities/connections/api.js";
 import ConnectionsDevice from "../../utilities/connections/device.js";
 import Settings from "../../utilities/settings.js";
@@ -171,7 +172,7 @@ export default class QuestMap {
     // Method to add a route from the player to the selected quest marker
     addRoute() {
         if (this.#selectedQuestMarker == null) {
-            alert('no quest selected');
+            Toast.show('no quest selected');
             return;
         }
         this.#clearRoute();
