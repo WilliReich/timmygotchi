@@ -4,6 +4,16 @@ import TimmyDB from "../manager/database.js";
 import Customize from "../manager/customize.js";
 import Needs from "../manager/needs.js";
 
+// Customize buttons: which selection they change and in which direction
+const CUSTOMIZE_BUTTONS = [
+    { button: 'BG_NEXT',   selection: 'background', unlocked: 'backgroundArray', step: 1 },
+    { button: 'BG_PREV',   selection: 'background', unlocked: 'backgroundArray', step: -1 },
+    { button: 'HAT_NEXT',  selection: 'hat',        unlocked: 'hatArray',        step: 1 },
+    { button: 'HAT_PREV',  selection: 'hat',        unlocked: 'hatArray',        step: -1 },
+    { button: 'BODY_NEXT', selection: 'body',       unlocked: 'bodyArray',       step: 1 },
+    { button: 'BODY_PREV', selection: 'body',       unlocked: 'bodyArray',       step: -1 },
+];
+
 // HUD (Heads-Up Display) class responsible for rendering and handling user input for the game's HUD
 export default class HUD {
 
@@ -30,32 +40,12 @@ export default class HUD {
             } else if (this.#isBtnPressed(dst.CUSTOM_SAVE)) {
                 TimmyDB.saveCustomize(Customize.Items)
                 this.#isCustomize = false;
-
-                // Select customization items
-            } else if (this.#isBtnPressed(dst.BG_NEXT)) {
-                let index = Customize.Items.Selected.background + 1;
-                let length = Customize.Items.Unlocked.backgroundArray.length;
-                Customize.Items.Selected.background = this.#nextIndexLoop(index, length);
-            } else if (this.#isBtnPressed(dst.BG_PREV)) {
-                let index = Customize.Items.Selected.background - 1;
-                let length = Customize.Items.Unlocked.backgroundArray.length;
-                Customize.Items.Selected.background = this.#nextIndexLoop(index, length);
-            } else if (this.#isBtnPressed(dst.HAT_NEXT)) {
-                let index = Customize.Items.Selected.hat + 1;
-                let length = Customize.Items.Unlocked.hatArray.length;
-                Customize.Items.Selected.hat = this.#nextIndexLoop(index, length);
-            } else if (this.#isBtnPressed(dst.HAT_PREV)) {
-                let index = Customize.Items.Selected.hat - 1;
-                let length = Customize.Items.Unlocked.hatArray.length;
-                Customize.Items.Selected.hat = this.#nextIndexLoop(index, length);
-            } else if (this.#isBtnPressed(dst.BODY_NEXT)) {
-                let index = Customize.Items.Selected.body + 1;
-                let length = Customize.Items.Unlocked.bodyArray.length;
-                Customize.Items.Selected.body = this.#nextIndexLoop(index, length);
-            } else if (this.#isBtnPressed(dst.BODY_PREV)) {
-                let index = Customize.Items.Selected.body - 1;
-                let length = Customize.Items.Unlocked.bodyArray.length;
-                Customize.Items.Selected.body = this.#nextIndexLoop(index, length);
+            } else {
+                // Select customization items: next or previous background, hat or body
+                const pressed = CUSTOMIZE_BUTTONS.find(entry => this.#isBtnPressed(dst[entry.button]));
+                if (pressed != null) {
+                    this.#selectNext(pressed);
+                }
             }
         } else {
             // Handle inputs in game mode
@@ -89,6 +79,13 @@ export default class HUD {
         } else {
             return true;
         }
+    }
+
+    // Moves the selection of one customize category one step forward or back
+    #selectNext({ selection, unlocked, step }) {
+        const index = Customize.Items.Selected[selection] + step;
+        const length = Customize.Items.Unlocked[unlocked].length;
+        Customize.Items.Selected[selection] = this.#nextIndexLoop(index, length);
     }
 
     // Loops through the array indices with wrapping behavior
