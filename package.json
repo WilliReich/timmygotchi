@@ -1,0 +1,21 @@
+{
+  "name": "timmygotchi",
+  "version": "1.0.0",
+  "description": "Tamagotchi-style progressive web app that gamifies mobile air-quality measurements. Client of the SmartEnviroSystem gamification microservices (bachelor thesis, HS Bielefeld 2024).",
+  "private": true,
+  "type": "module",
+  "author": "Willi Reich",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WilliReich/timmygotchi.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "http-server . -c-1 -p 8080"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
