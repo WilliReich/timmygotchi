@@ -35,6 +35,37 @@ const db = {
     questPositions: null,     // { center, records }
 };
 
+// --- persistence: the fake server survives reloads, like the app's own local database -----------
+const STORAGE_KEY = 'timmygotchi-demo-server';
+
+function loadState() {
+    try {
+        const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (stored == null) {
+            return;
+        }
+        db.players = stored.players;
+        db.sessions = new Map(stored.sessions);
+        db.nextPlayerId = stored.nextPlayerId;
+        db.nextSessionId = stored.nextSessionId;
+        db.questPositions = stored.questPositions;
+    } catch (error) {
+        console.warn('[MockServer] stored state ignored:', error);
+    }
+}
+
+function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        players: db.players,
+        sessions: [...db.sessions],
+        nextPlayerId: db.nextPlayerId,
+        nextSessionId: db.nextSessionId,
+        questPositions: db.questPositions,
+    }));
+}
+
+loadState();
+
 // --- helpers ---------------------------------------------------------------------------------
 function json(status, body) {
     return new Response(JSON.stringify(body), {
@@ -90,6 +121,7 @@ function questPositions() {
     });
 
     db.questPositions = { center: { ...center }, records: records };
+    saveState();
     return records;
 }
 
@@ -107,6 +139,7 @@ const routes = [
             if (player == null) {
                 player = { id: db.nextPlayerId++, player_name: name, score: 0 };
                 db.players.push(player);
+                saveState();
             }
             return json(201, { id: player.id });
         },
@@ -135,6 +168,7 @@ const routes = [
                 scored: false,
             };
             db.sessions.set(session.id, session);
+            saveState();
             return json(201, session.id);
         },
     },
@@ -158,6 +192,7 @@ const routes = [
             if (player != null && !session.scored) {
                 player.score += sessionScore(session);
                 session.scored = true;
+                saveState();
             }
             return json(200, { score: player ? player.score : 0 });
         },
