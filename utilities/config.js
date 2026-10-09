@@ -28,6 +28,9 @@ const Config = {
         STAY_TIME_SEC: 5,
         RESPAWN_MIN: 1,
     },
+
+    // Zoom level of the quest map in demo mode, close enough to watch the simulated walker
+    demoMapZoom: 15,
 };
 
 export default Config;

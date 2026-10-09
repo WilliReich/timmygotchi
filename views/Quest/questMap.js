@@ -3,6 +3,7 @@ import ConnectionsApi from "../../utilities/connections/api.js";
 import ConnectionsDevice from "../../utilities/connections/device.js";
 import Settings from "../../utilities/settings.js";
 import Database from "../../utilities/database.js";
+import Config from "../../utilities/config.js";
 
 export default class QuestMap {
 
@@ -20,7 +21,7 @@ export default class QuestMap {
     #route = null;
 
     constructor(context) {
-        let defaultZoom = 12;
+        const defaultZoom = Config.isDemo ? Config.demoMapZoom : 12;
         this.#map = Map.create(context, defaultZoom);
         this.#playerMarker = Map.addPlayerMarker(this.#map);
         this.centerPlayer();
