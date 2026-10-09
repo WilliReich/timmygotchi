@@ -70,9 +70,9 @@ export default class ActiveQuest extends EventTarget {
         let isBonus = this.#isBonus();
         Database.Parameter.addOneToReward(isBonus);
         if (isBonus) {
-            Database.Measurements.questNormal++;
-        } else {
             Database.Measurements.questBonus++;
+        } else {
+            Database.Measurements.questNormal++;
         }
         this.#questMap.deleteOneQuestMarker(this.#marker);
         this.dispatchEvent(new CustomEvent('questfinished', {
