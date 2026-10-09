@@ -5,6 +5,10 @@ import ActiveQuest from "./activeQuest.js";
 import ConnectionsDevice from "../../utilities/connections/device.js";
 import Settings from "../../utilities/settings.js";
 import Database from "../../utilities/database.js";
+import Config from "../../utilities/config.js";
+
+// The simulated GPS walker is only loaded in demo mode
+const DemoGps = Config.isDemo ? (await import("../../utilities/connections/mock/demoGps.js")).default : null;
 
 export default class ViewQuest extends View {
     #questMapContainer;
@@ -54,6 +58,24 @@ export default class ViewQuest extends View {
         this.#questMap = new QuestMap(this.#questMapContainer);
         this.#activeQuest = new ActiveQuest(this.#questMap);
         this.#setListener();
+        if (DemoGps != null) {
+            this.#setDemoListener();
+        }
+    };
+
+    // Demo mode: the simulated position walks to the closest quest and back home
+    #setDemoListener() {
+        this.#btnFindQuests.addEventListener("click", () => {
+            DemoGps.arm();
+        });
+        this.#activeQuest.addEventListener("targetchanged", (event) => {
+            if (event.detail != null) {
+                DemoGps.walkTo(event.detail.latitude, event.detail.longitude);
+            }
+        });
+        this.#activeQuest.addEventListener("questfinished", () => {
+            DemoGps.returnHome();
+        });
     };
 
     #setListener() {

@@ -1,4 +1,9 @@
 import Settings from "../settings.js";
+import Config from "../config.js";
+import Http from "./http.js";
+
+// The simulated GPS is only loaded in demo mode
+const DemoGps = Config.isDemo ? (await import("./mock/demoGps.js")).default : null;
 
 // Object to manage connections and interactions with local devices (Internet, Sensor, GPS)
 let ConnectionsDevice = {
@@ -20,7 +25,7 @@ let ConnectionsDevice = {
         // Method to establish a connection to the sensor using its IP address
         connect: function (ip) {
             let url = "https://" + ip + ":8181/SmartDataSensor/smartdata/system/sysinfo";
-            fetch(url).then(response => {
+            Http.fetch(url).then(response => {
                 if (response.ok) {
                     ConnectionsDevice.Sensor.isConnected = true; // Mark sensor as ready for measuring begin
                     ConnectionsDevice.Sensor.sensorIP = ip;
@@ -55,7 +60,7 @@ let ConnectionsDevice = {
             }
             alert("please wait until sensor is shut down");
             let url = "https://" + ConnectionsDevice.Sensor.sensorIP + ":8181/SmartBridge/smartbridge/bridge/execute?command=sh&file=/scripts/shutdown.sh";
-            fetch(url).then(response => {
+            Http.fetch(url).then(response => {
                 // Reset sensor variables
                 ConnectionsDevice.Sensor.isRunning = false;
                 ConnectionsDevice.Sensor.isConnected = false;
@@ -74,7 +79,7 @@ let ConnectionsDevice = {
             let url = "https://" + ConnectionsDevice.Sensor.sensorIP + ":8181/SmartBridge/smartbridge/bridge/execute?command=python&file=/scripts/sds011.py";
             let pmValues = {};
             try {
-                const response = await fetch(url);
+                const response = await Http.fetch(url);
                 const json = await response.json();
                 pmValues.pm2_5 = json.result.value["pm2.5"];
                 pmValues.pm10_0 = json.result.value["pm10.0"];
@@ -93,7 +98,7 @@ let ConnectionsDevice = {
             let url = "https://" + ConnectionsDevice.Sensor.sensorIP + ":8181/SmartBridge/smartbridge/bridge/execute?command=python&file=/scripts/temperature.py&logtarget=temp";
             let temp;
             try {
-                const response = await fetch(url);
+                const response = await Http.fetch(url);
                 const json = await response.json();
                 temp = json.result;
             } catch (error) {
@@ -110,20 +115,25 @@ let ConnectionsDevice = {
 
         // Method to read the current GPS position
         read: function () {
-            if (navigator.geolocation) {
-                if (Settings.Gps.isEnabled) {
-                    navigator.geolocation.getCurrentPosition(
-                        this.success,
-                        this.error
-                    );
-                } else {
-                    ConnectionsDevice.Gps.isRunning = false;
-                    ConnectionsDevice.Gps.position = null;
-                    ConnectionsDevice.GUI.connectionUpdate();
-                }
-            } else {
+            if (!navigator.geolocation) {
                 alert("Geolocation is not supported by this browser.");
+                return;
             }
+            if (!Settings.Gps.isEnabled) {
+                ConnectionsDevice.Gps.isRunning = false;
+                ConnectionsDevice.Gps.position = null;
+                ConnectionsDevice.GUI.connectionUpdate();
+                return;
+            }
+            if (DemoGps != null) {
+                // demo mode: simulated position, see mock/demoGps.js
+                this.success(DemoGps.currentPosition());
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(
+                this.success,
+                this.error
+            );
         },
 
         // Success handler for geolocation: updates the GPS position and status

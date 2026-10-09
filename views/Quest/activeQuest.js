@@ -2,21 +2,28 @@ import ConnectionsApi from "../../utilities/connections/api.js";
 import Settings from "../../utilities/settings.js";
 import Database from "../../utilities/database.js";
 
-export default class ActiveQuest {
+// Tracks the closest quest and finishes it once the player stayed in range long enough.
+// Emits 'targetchanged' and 'questfinished' events with the quest coordinates in detail.
+export default class ActiveQuest extends EventTarget {
     #marker;
     #distance;
     #arrivalTime = null;
     #questMap;
 
     constructor(questMap) {
+        super();
         this.#questMap = questMap;
     }
 
     // Update method to check if the player has completed the quest
     update() {
         let questObj = this.#questMap.getClosestMarker();
+        const previousMarker = this.#marker;
         this.#marker = questObj.marker;
         this.#distance = questObj.distance;
+        if (this.#marker !== previousMarker) {
+            this.#notifyTargetChanged();
+        }
         if (this.#marker == null || this.#distance < 0) {
             return
         }
@@ -68,6 +75,17 @@ export default class ActiveQuest {
             Database.Measurements.questBonus++;
         }
         this.#questMap.deleteOneQuestMarker(this.#marker);
+        this.dispatchEvent(new CustomEvent('questfinished', {
+            detail: { latitude: coords.lat, longitude: coords.lng, isBonus: isBonus },
+        }));
+    };
+
+    // Tells listeners which quest is targeted now, detail is null when there is none
+    #notifyTargetChanged() {
+        const latLng = this.#marker != null ? this.#marker.getLatLng() : null;
+        this.dispatchEvent(new CustomEvent('targetchanged', {
+            detail: latLng == null ? null : { latitude: latLng.lat, longitude: latLng.lng },
+        }));
     };
 
     // Determine if the quest is a bonus quest

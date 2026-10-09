@@ -5,6 +5,7 @@ import { distanceMeters, destinationPoint } from "./geo.js";
  * In-browser stand-in for the services the app talks to:
  *   - SmartGamification: players, sessions, scores
  *   - SmartDataAirquality: measurement positions (quests), measurement upload
+ *   - the mobile measuring station: sysinfo, SDS011 and temperature scripts
  *
  * MockServer.fetch() mimics window.fetch(): it matches the request URL against
  * the routes below and resolves with a Response object carrying JSON.
@@ -14,6 +15,7 @@ const LATENCY_MS = 100;
 const WEEKDAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const QUEST_DISTANCES_M = [150, 400, 700, 1100, 1500, 1900];   // the first one is reachable within seconds
 const RECENTER_DISTANCE_M = 5000;                              // regenerate quests when the player moved this far
+const SENSOR_MAC = 'DE:MO:00:00:00:01';
 
 // --- fake database ---------------------------------------------------------------------------
 const db = {
@@ -194,6 +196,30 @@ const routes = [
     {
         method: 'POST', pathPrefix: '/SmartDataAirquality/smartdata/records/sensor_',
         handle: (url, body) => json(201, { stored: Array.isArray(body) ? body.length : 0 }),
+    },
+
+    // Mobile measuring station, reached under the IP the player enters
+    {
+        method: 'GET', path: '/SmartDataSensor/smartdata/system/sysinfo',
+        handle: () => json(200, { mac: SENSOR_MAC }),
+    },
+    {
+        method: 'GET', path: '/SmartBridge/smartbridge/bridge/execute',
+        handle: (url) => {
+            switch (url.searchParams.get('file')) {
+                case '/scripts/sds011.py':
+                    return json(200, { result: { value: {
+                        'pm2.5': round(5 + Math.random() * 30, 1),
+                        'pm10.0': round(10 + Math.random() * 50, 1),
+                    } } });
+                case '/scripts/temperature.py':
+                    return json(200, { result: round(15 + Math.random() * 10, 1) });
+                case '/scripts/shutdown.sh':
+                    return json(200, { result: 'shutdown' });
+                default:
+                    return json(404, { error: 'unknown script' });
+            }
+        },
     },
 ];
 
