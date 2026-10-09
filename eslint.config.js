@@ -25,6 +25,12 @@ export default defineConfig([
         },
     },
     {
+        files: ["tests/**/*.js"],
+        languageOptions: {
+            globals: { ...globals.node },
+        },
+    },
+    {
         files: ["eslint.config.js"],
         languageOptions: {
             globals: { ...globals.node },
