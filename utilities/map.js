@@ -34,16 +34,10 @@ Map.create = function (context, zoom) {
     return newMap;
 };
 
-// Method to add a player marker on the map
+// Method to add a player marker on the map, placed at the current position if one is known
 Map.addPlayerMarker = function (map) {
-    let playerMarker;
-    // Check if GPS position is available
-    if (ConnectionsDevice.Gps.position == null) {
-        playerMarker = L.marker([0, 0], {icon: this.ICONS.PLAYER});
-    } else {
-        const coords = ConnectionsDevice.Gps.coords;
-        playerMarker = L.marker([coords.latitude, coords.longitude], {icon: this.ICONS.PLAYER});
-    }
+    const playerMarker = L.marker([0, 0], {icon: this.ICONS.PLAYER});
+    this.updatePlayerMarker(playerMarker);
     playerMarker.addTo(map);
     return playerMarker;
 };
