@@ -50,6 +50,10 @@ self.addEventListener("install", event => {
                 "./utilities/database.js",
                 "./utilities/connections/api.js",
                 "./utilities/connections/device.js",
+                "./utilities/connections/http.js",
+                "./utilities/connections/mock/mockServer.js",
+                "./utilities/connections/mock/demoGps.js",
+                "./utilities/connections/mock/geo.js",
 
 
                 "./images/logos/logo192.png",

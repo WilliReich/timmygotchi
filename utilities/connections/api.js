@@ -1,6 +1,7 @@
 import GameAPI from "../../game/gameAPI.js";
 import Map from "../map.js";
 import Config from "../config.js";
+import Http from "./http.js";
 
 // The ConnectionsApi module provides various methods for interacting with external APIs and services.
 let ConnectionsApi = {
@@ -28,7 +29,7 @@ let ConnectionsApi = {
     REST: {
         GET: async function (url) {
             try {
-                let response = await fetch(url);
+                let response = await Http.fetch(url);
 
                 if (response == null || response.status !== 200) {
                     return null
@@ -50,7 +51,7 @@ let ConnectionsApi = {
             };
 
             try {
-                let response = await fetch(url, opts);
+                let response = await Http.fetch(url, opts);
 
                 if (response == null || response.status !== 201) {
                     return null
@@ -71,7 +72,7 @@ let ConnectionsApi = {
             };
 
             try {
-                let response = await fetch(url, opts);
+                let response = await Http.fetch(url, opts);
 
                 if (response == null || response.status !== 200) {
                     return null
@@ -213,7 +214,7 @@ let ConnectionsApi = {
         getPosArray: async function (radiusMeter) {
             const url = ConnectionsApi.SmartAirQuality.urlPrefix + "/SmartDataAirquality/smartdata/records/tbl_measurement_pos?storage=smartmonitoring"
             const posArray = [];
-            const response = await fetch(url);
+            const response = await Http.fetch(url);
             try {
                 const mpObject = JSON.parse(await response.text());
                 mpObject.records.forEach(pos => {
@@ -242,7 +243,7 @@ let ConnectionsApi = {
             };
 
             try {
-                let response = await fetch(url, opts);
+                let response = await Http.fetch(url, opts);
                 if (response.status === 201) {
                     return true
                 }
