@@ -1,0 +1,88 @@
+/* View */
+.viewTitle {
+    font-family: "Cooper Black", serif;
+    font-size: 16px;
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    height: 5%;
+    width: 90%;
+}
+
+.viewContent {
+    font-family: "Cooper Black", serif;
+    font-weight: bold;
+    font-size: 16px;
+    margin: auto;
+    height: 95%;
+    width: 90%;
+}
+
+input {
+    font-family: "Cooper Black", serif;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10%;
+}
+
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #197fb6;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #197fb6;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 13%;
+}
+
+.slider.round:before {
+    border-radius: 13%;
+}

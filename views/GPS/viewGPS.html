@@ -1,0 +1,88 @@
+<div>
+    <style>
+        .mapBackground {
+            border-radius: 1%;
+            background: url(images/background/static_no_signal.png) no-repeat;
+            background-size: 100%;
+            background-position-y: 20%;
+        }
+
+        #gpsMiniMap {
+            height: 500px;
+            visibility: hidden;
+            border-radius: 1%;
+        }
+
+        #gpsCoordsDisplay {
+            margin-top: 1%;
+            height: 10%;
+            border: 2px solid black
+        }
+
+        #gpsSettings {
+            margin-top: 1%;
+            height: 30%;
+            border: 2px solid black
+        }
+
+
+        .gpsTable {
+            width: 100%;
+            text-align: center;
+        }
+
+        .gpsTable.columnCoordsDisplay {
+            width: 33%
+        }
+
+    </style>
+
+    <div class="viewTitle">
+        <h1>GPS</h1>
+    </div>
+    <div class="viewContent">
+        <div class="mapBackground">
+            <div id='gpsMiniMap'></div>
+        </div>
+
+        <div id="gpsCoordsDisplay">
+            <table class="gpsTable">
+                <tr>
+                    <td class="gpsTable columnCoordsDisplay">Latitude:</td>
+                    <td class='gpsTable columnCoordsDisplay'>Longitude:</td>
+                    <td class="gpsTable columnCoordsDisplay">Altitude:</td>
+                </tr>
+                <tr>
+                    <td id="valueLatitude" class="gpsTable columnCoordsDisplay">unknown</td>
+                    <td id="valueLongitude" class="gpsTable columnCoordsDisplay">unknown</td>
+                    <td id="valueAltitude" class="gpsTable columnCoordsDisplay">unknown</td>
+                </tr>
+            </table>
+        </div>
+        <div id="gpsSettings">
+            <table class="gpsTable">
+                <tr>
+                    <td>Activated</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="isGPSActivated">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="labelRefreshRate" for="inputRefreshRate">Refresh rate in sec (1 - 30)</label>
+                        <input id="inputRefreshRate" type="number" step="1" min="1" max="30" value="1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="btnRefresh">Refresh</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,126 @@
+<div>
+    <style>
+        .menuTop {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        #labelRadius {
+            grid-column: 1 / 3;
+            grid-row: 1;
+        }
+
+        #inputRadius {
+            grid-column: 2 / 3;
+            grid-row: 1;
+        }
+
+        #btnFindQuests {
+            grid-column: 3 / 3;
+            grid-row: 1;
+        }
+
+
+        #inputRadius {
+            text-align: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        #btnFindQuests {
+            margin-left: 10%;
+            height: 100%;
+            width: 100%;
+        }
+
+        #questMapBackground {
+            border-radius: 1%;
+            background: url(images/background/static_no_signal.png) no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #questMapContainer {
+            height: 750px;
+            border-radius: 1%;
+            visibility: hidden;
+        }
+
+
+        .menuBottom {
+            height: 100px;
+        }
+
+        #displayQuestCountdown {
+            grid-column: 1/4;
+            grid-row: 1/3;
+        }
+
+
+        #questInfoContainer{
+            width: 90%;
+            margin: auto auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-auto-rows: 0.2fr;
+            grid-gap: 10px;
+        }
+
+        #labelClosestDistance{
+            grid-column: 1/2;
+            grid-row: 1/2;
+        }
+        #valueClosestDistance{
+            grid-column: 1/2;
+            grid-row: 2/3;
+        }
+
+        #labelIsAutoCenter{
+            grid-column: 2/3;
+            grid-row: 1/2;
+        }
+        #cbIsAutoCenter{
+            grid-column: 2/3;
+            grid-row: 2/3;
+        }
+
+        #btnNavigate{
+            grid-column: 3/4;
+            grid-row: 1/3;
+        }
+
+
+
+    </style>
+
+    <div class="viewTitle">
+        <h1>Quest</h1>
+    </div>
+    <div class="viewContent">
+        <div class="menuTop">
+            <label id="labelRadius" for="inputRadius">Radius km (2-50)</label>
+            <input id="inputRadius" type="number" step="1" min="2" max="50" value="5">
+            <button id="btnFindQuests">find</button>
+        </div>
+
+        <div id="questMapBackground">
+            <div id="questMapContainer"></div>
+        </div>
+
+        <div class="menuBottom">
+            <div id="questCountdownContainer" class="menuBottomContainer">
+                <div id="displayQuestCountdown"></div>
+            </div>
+            <div id="questInfoContainer" class="menuBottomContainer">
+                <div id="labelClosestDistance">Closest Quest</div>
+                <div id="valueClosestDistance">unknown</div>
+                <div id="labelIsAutoCenter">auto center</div>
+                <label class="switch">
+                    <input type="checkbox" id="cbIsAutoCenter">
+                    <span class="slider round"></span>
+                </label>
+                <button id="btnNavigate">NAV</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+# dependencies / build
+node_modules/
+dist/
+coverage/
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# misc
+*.log
+.env

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#043794FF">
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="views/view.css">
+
+    <title>TimmySimulator</title>
+
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./images/logos/logo192.png">
+    <link rel="favicon" href="./images/logos/logo192.png">
+</head>
+<body>
+    <div class="game-container">
+            <div class="menu top">
+                <button id="btnSettings" class="button settings"></button>
+                <button id="btnGPS" class="button gps disabled"></button>
+                <button id="btnSensor" class="button sensor disabled"></button>
+                <div id="statusOnline" class="button online disabled" ></div>
+            </div>
+            <div class="view-container"></div>
+            <div class="menu bottom">
+                <button id="btnQuest" class="button"></button>
+                <button id="btnSync" class="button"></button>
+                <button id="btnGame" class="button"></button>
+                <button id="btnRewards" class="button"></button>
+                <button id="btnAchievements" class="button"></button>
+            </div>
+    </div>
+
+    <!-- leaflet map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <!-- leaflet routing -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <!-- localbase database -->
+    <script type="module" src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
+
+    <script type="module" src="index.js" defer></script>
+</body>
+</html>

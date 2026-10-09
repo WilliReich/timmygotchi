@@ -1,0 +1,28 @@
+{
+  "name": "Feinstaub Game",
+  "short_name": "Feinstaub",
+  "start_url": ".",
+  "background_color": "#5B8EDCFF",
+  "theme_color": "#043794FF",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/logos/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logos/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/logos/logo512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

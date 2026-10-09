@@ -1,0 +1,60 @@
+<div>
+    <style>
+        #inputSensorIP{
+            width: 100%;
+        }
+    </style>
+
+    <div class="viewTitle">
+        <h1>Sensor</h1>
+    </div>
+    <div class="viewContent">
+
+        <table class="sensorTable">
+            <tr>
+                <td>SENSOR HOTSPOT</td>
+            </tr>
+            <tr>
+                <td>Name: ***REMOVED***</td>
+            </tr>
+            <tr>
+                <td>Password: ***REMOVED***</td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="inputSensorIP">Sensor IP</label>
+                </td>
+                <td>
+                    <input id="inputSensorIP" type="text" minlength="7" maxlength="15" size="15"
+                           pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$">
+                </td>
+            </tr>
+            <tr>
+                <td><button id="btnConnectSensor">connect</button></td>
+            </tr>
+            <tr>
+                <td>SensorPi MAC</td>
+                <td id="valueSensorMAC">unknown</td>
+            </tr>
+            <tr>
+                <td>
+                    <label id="labelRefreshRate" for="inputRefreshRate">Refresh rate in sec (1 - 60)</label>
+                </td>
+                <td>
+                    <input id="inputRefreshRate" type="number" step="1" min="1" max="60" value="30">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="btnStartMeasurement">Start</button>
+                </td>
+                <td>
+                    <button id="btnStopMeasurement">Stop</button>
+                </td>
+                <td>
+                    <button id="btnSensorOFF">SensorPi off</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

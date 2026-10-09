@@ -1,0 +1,121 @@
+body {
+    overflow: hidden;
+    display: block;
+    background: url(images/background/bodyBackground.png) repeat-x;
+    background-size: auto 100%;
+    min-height: 100vh;
+}
+
+.game-container{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 9 / 16;
+    background: url(images/background/intro.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.view-container {
+    position: absolute;
+    height: 86%;
+    aspect-ratio: 7 / 11;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 1%;
+    background: #06aaff;
+}
+
+.menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 7%;
+    width: 100%;
+    display: flex;
+    overflow:hidden;
+    align-items: center;
+    visibility: hidden;
+}
+.menu.top{
+    top: 0;
+    justify-content: start;
+}
+.menu.bottom{
+    bottom: 0;
+    justify-content: space-around;
+}
+
+.button {
+    position: relative;
+    height: 70%;
+    margin-left: 1%;
+    aspect-ratio: 1/1;
+    border-radius: 13%;
+    cursor: pointer;
+}
+
+
+.button.settings {
+    background: url('images/icons/icon_settings.png'), #197fb6;
+    background-size: 100% 100%;
+}
+.button.gps {
+    background: url('images/icons/icon_gps.png'), #197fb6;
+    background-size: 100% 100%;
+}
+.button.gps.disabled {
+    background: url('images/icons/icon_disable.png'), url('images/icons/icon_gps.png'), #197fb6;
+    background-size: 100% 100%;
+}
+.button.sensor {
+    background: url('images/icons/icon_sensor.png'), #197fb6;
+    background-size: 100% 100%;
+}
+.button.sensor.disabled {
+    background: url('images/icons/icon_disable.png'), url('images/icons/icon_sensor.png'), #197fb6;
+    background-size: 100% 100%;
+}
+
+.button.online {
+    background: url('images/icons/icon_online.png');
+    background-size: 100% 100%;
+    cursor: default;
+    margin-left: 60%;
+}
+.button.online.disabled {
+    background: url('images/icons/icon_disable.png'), url('images/icons/icon_online.png');
+    background-size: 100% 100%;
+}
+
+#btnQuest {
+    background: url('images/icons/icon_quest.png'), #99ded0;
+    background-size: 100% 100%;
+}
+
+#btnSync {
+    background: url('images/icons/icon_sync.png'), #99ded0;
+    background-size: 100% 100%;
+}
+
+#btnRewards {
+    background: url('images/icons/icon_rewards.png'), #99ded0;
+    background-size: 100% 100%;
+}
+
+#btnGame {
+    background: url('images/icons/icon_game.png'), #99ded0;
+    background-size: 100% 100%;
+}
+
+#btnAchievements {
+    background: url('images/icons/icon_achievements.png'), #99ded0;
+    background-size: 100% 100%;
+}
