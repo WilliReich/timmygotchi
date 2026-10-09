@@ -62,7 +62,7 @@ let ConnectionsDevice = {
             }
             Toast.show("please wait until sensor is shut down");
             let url = "https://" + ConnectionsDevice.Sensor.sensorIP + ":8181/SmartBridge/smartbridge/bridge/execute?command=sh&file=/scripts/shutdown.sh";
-            Http.fetch(url).then(response => {
+            Http.fetch(url).then(() => {
                 // Reset sensor variables
                 ConnectionsDevice.Sensor.isRunning = false;
                 ConnectionsDevice.Sensor.isConnected = false;

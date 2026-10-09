@@ -112,7 +112,7 @@ Needs.getDaysLived = function () {
     const minDay = 1440;
     const secondsNow = new Date().getTime() / milliMin;
 
-    let days = ((secondsNow - Needs.Timmy.BIRTHDAY_MIN) / 1440).toFixed(0);
+    let days = ((secondsNow - Needs.Timmy.BIRTHDAY_MIN) / minDay).toFixed(0);
     if (days > '999') {
         return '999'
     } else {
