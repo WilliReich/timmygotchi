@@ -34,8 +34,8 @@ export default class Synchronizer {
                 }
                 // Add measurement data to the entry
                 data.measurementsArray.push(entry.measurement);
-                data.quest_normal += entry.questNormal;
-                data.quest_bonus += entry.questBonus;
+                data.questNormal += entry.questNormal;
+                data.questBonus += entry.questBonus;
                 // Update the map with the new data
                 this.#measurementMap.set(entry.route, data);
             });
