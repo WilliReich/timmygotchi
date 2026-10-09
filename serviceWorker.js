@@ -43,6 +43,7 @@ self.addEventListener("install", event => {
                 "./views/Achievements/viewAchievements.js",
 
 
+                "./utilities/config.js",
                 "./utilities/settings.js",
                 "./utilities/map.js",
                 "./utilities/display.js",

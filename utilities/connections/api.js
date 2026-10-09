@@ -1,5 +1,6 @@
 import GameAPI from "../../game/gameAPI.js";
 import Map from "../map.js";
+import Config from "../config.js";
 
 // The ConnectionsApi module provides various methods for interacting with external APIs and services.
 let ConnectionsApi = {
@@ -86,9 +87,7 @@ let ConnectionsApi = {
 
     // Smart Gamification API interactions
     SmartGamification: {
-        // TODO switch local to server address
-        //urlPrefix: "https://scl.fh-bielefeld.de",
-        urlPrefix: "http://localhost:8080",
+        urlPrefix: Config.apiBaseUrl,
 
         // Player-related API interactions
         Player: {
@@ -208,9 +207,7 @@ let ConnectionsApi = {
 
     // Smart Air Quality API interactions
     SmartAirQuality: {
-        // TODO switch local to server address
-        //urlPrefix: "https://scl.fh-bielefeld.de",
-        urlPrefix: "http://localhost:8080",
+        urlPrefix: Config.apiBaseUrl,
 
         // Retrieves measurement positions within a specified radius from the player's location
         getPosArray: async function (radiusMeter) {

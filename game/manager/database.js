@@ -1,6 +1,8 @@
+import Config from "../../utilities/config.js";
+
 // Initialize Localbase with 'timmyDB' as the database name
 let TimmyDB = {
-    db: new Localbase('timmyDB'),
+    db: new Localbase('timmyDB' + Config.databaseSuffix),
     tableName: 'timmy',
     keyNeeds: 'needs',
     keyCustomize: 'customize',

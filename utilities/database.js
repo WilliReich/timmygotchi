@@ -1,8 +1,9 @@
 import Settings from "./settings.js";
+import Config from "./config.js";
 
 // Database object to handle storage and retrieval of data using Localbase
 let Database = {
-    db: new Localbase('db'),
+    db: new Localbase('db' + Config.databaseSuffix),
 
     Parameter: {
         tableName: 'parameter',
