@@ -19,18 +19,31 @@ no backend and no sensor needed, see [Demo mode](#demo-mode).
 
 Timmygotchi is the client of my bachelor thesis *Konzeption und Implementierung von Mikro-Services im
 SmartEnviroSystem für die Gamifizierung von Luftqualitätsmessungen mit mobilen Messstationen* (2024):
-design and implementation of micro services for gamifying air-quality measurements with mobile
-measuring stations. The thesis delivered three parts:
+design and implementation of micro services in an existing research system, so that air-quality
+measurements with mobile measuring stations become a game.
 
-- **AirqualityMeasurementPosEditor**, a tool for data administrators to define positions and times
-  at which measurements are wanted.
-- **SmartGamification**, a micro service that stores players and sessions and computes scores.
-- **Timmygotchi**, this proof-of-concept game, built as a PWA without a framework so it stays small
-  on a phone.
+The thesis had a three-month time frame. In that time the work covered the whole chain:
 
-Only the client lives in this repository. The services belong to the university's SmartEnviroSystem
-and are not public. The app was built from scratch on purpose: the thesis asked for as few libraries
-as possible, so the UI, the game loop and the data layer are plain browser APIs.
+- **Analysis and design**: stakeholders, user stories, data structures, REST contracts, sequence and
+  data-flow diagrams, UI mockups.
+- **AirqualityMeasurementPosEditor**, a plugin for the SWAC web framework used by the research
+  system. Data administrators place measurement positions on a map and set measuring times per
+  weekday. Bilingual UI, input validation, its own PostgreSQL table, data access through the
+  framework's model layer.
+- **SmartGamification**, a Jakarta EE micro service in Java 17 on Payara with PostgreSQL: players,
+  sessions and scores behind a REST API with configurable table names.
+- **Framework extensions**: the shared data access layer gained write operations, and the
+  SmartDataLyzer service gained endpoints that compute the distance (Haversine) and the climbed
+  altitude of a session.
+- **Timmygotchi**, this client, written from scratch as a PWA without a framework, because the
+  thesis asked for as few libraries as possible on the phone.
+- **Hardware**: integration of the mobile measuring station, a Raspberry Pi based device with a
+  particulate-matter sensor, reached over its own WLAN hotspot.
+- **The written thesis** itself.
+
+Only the client lives in this repository. The plugin, the micro service and the framework extensions
+went into the research system's own repositories, which are not public. The initial commit here is
+the exact state at submission; everything after it is listed under *What changed since the thesis*.
 
 ## How the game works
 
@@ -158,8 +171,9 @@ while preparing the project for this portfolio:
 ## Known limitations
 
 - No authentication or protection against manipulated data; the thesis left security out of scope.
-- Syncing while a measurement is running uploads the current route and creates a second session
-  for it on the next sync.
+- Sync after stopping the measurement. Syncing while it runs uploads the current route and creates
+  a second session for it on the next sync, and a record written during the upload can be
+  deleted without being uploaded.
 - Leaflet and Localbase are loaded from a CDN, so the map views need a network connection even
   though the app shell works offline.
 - The sensor protocol is specific to the measuring station of the SmartEnviroSystem.
