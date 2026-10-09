@@ -112,8 +112,11 @@ export default class ViewQuest extends View {
         if (!this.#hasSignals()) {
             return;
         }
+        // the marker always follows the position, the map view only when auto center is on
         if (Settings.Quest.isAutoCenter) {
             this.#questMap.centerPlayer();
+        } else {
+            this.#questMap.updatePlayer();
         }
         this.#activeQuest.update();
         let countdown = this.#activeQuest.getCountdown();

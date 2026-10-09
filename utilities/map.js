@@ -48,14 +48,22 @@ Map.addPlayerMarker = function (map) {
     return playerMarker;
 };
 
-// Method to center the map on the player's current location
-Map.centerPlayer = function (map, playerMarker) {
+// Method to move the player marker to the current GPS position, the map view stays where it is
+Map.updatePlayerMarker = function (playerMarker) {
     if (ConnectionsDevice.Gps.position == null) {
-        return;
+        return false;
     }
     const coords = ConnectionsDevice.Gps.position.coords;
-    map.setView([coords.latitude, coords.longitude], map.getZoom());
     playerMarker.setLatLng(new L.LatLng(coords.latitude, coords.longitude));
+    return true;
+};
+
+// Method to center the map on the player's current location
+Map.centerPlayer = function (map, playerMarker) {
+    if (!this.updatePlayerMarker(playerMarker)) {
+        return;
+    }
+    map.setView(playerMarker.getLatLng(), map.getZoom());
     this.reload(map);
 };
 

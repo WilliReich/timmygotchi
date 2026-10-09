@@ -226,4 +226,9 @@ export default class QuestMap {
     centerPlayer() {
         Map.centerPlayer(this.#map, this.#playerMarker);
     }
+
+    // Moves the player marker to the current position without touching the map view
+    updatePlayer() {
+        Map.updatePlayerMarker(this.#playerMarker);
+    }
 }
