@@ -109,15 +109,15 @@ quest logic knowing about the demo.
 flowchart LR
     Sensor[Mobile measuring station] -->|PM, temperature| Measure
     GPS[Geolocation] --> Measure
-    Measure -->|measurements| DB[(Localbase / IndexedDB)]
-    GPS --> Quest[Quest view: ActiveQuest]
+    Measure -->|measurements| DB[("Localbase / IndexedDB")]
+    GPS --> Quest["Quest view: ActiveQuest"]
     Quest -->|quest done| Game[Timmy game]
     Quest -->|reward| DB
     DB --> Sync[Synchronizer]
     Sync -->|measurements| SAQ[SmartDataAirquality]
     Sync -->|session| SG[SmartGamification]
     SG -->|scores| Highscore
-    Http{Http.fetch} -. demo mode .-> Mock[MockServer in the browser]
+    Http{"Http.fetch"} -. demo mode .-> Mock["MockServer in the browser"]
 ```
 
 All HTTP traffic goes through `Http.fetch`. In demo mode it delegates to the in-browser fake
