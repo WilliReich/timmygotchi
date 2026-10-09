@@ -76,6 +76,7 @@ export default class ActiveQuest extends EventTarget {
             Database.Measurements.questNormal++;
         }
         this.#questMap.deleteOneQuestMarker(this.#marker);
+        this.#arrivalTime = null;       // the next quest needs its own stay time
         this.dispatchEvent(new CustomEvent('questfinished', {
             detail: { latitude: coords.lat, longitude: coords.lng, isBonus: isBonus },
         }));

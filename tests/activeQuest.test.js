@@ -23,19 +23,22 @@ const NOON = new Date(2026, 9, 9, 12, 0, 0);
 const QUEST = { lat: 52.2963, lng: 8.9068 };
 const STAY_MS = (Settings.Quest.STAY_TIME_SEC + 1) * 1000;
 
-// A quest map with a single marker; the distance to the player is changed by the tests
-function fakeQuestMap(bonusTime = '') {
-    const marker = { getLatLng: () => QUEST, bonusTime };
+// A quest map with one marker per bonus time; the distance to the player is changed by the tests
+function fakeQuestMap(...bonusTimes) {
+    const markers = (bonusTimes.length > 0 ? bonusTimes : ['']).map(bonusTime => ({
+        getLatLng: () => QUEST,
+        bonusTime,
+    }));
     return {
         distance: 100,
-        markers: [marker],
+        markers,
         getClosestMarker() {
             return this.markers.length > 0
-                ? { marker, distance: this.distance }
+                ? { marker: this.markers[0], distance: this.distance }
                 : { marker: null, distance: -1 };
         },
-        deleteOneQuestMarker() {
-            this.markers = [];
+        deleteOneQuestMarker(marker) {
+            this.markers = this.markers.filter(other => other !== marker);
         },
     };
 }
@@ -115,5 +118,21 @@ describe('ActiveQuest', () => {
 
         expect(finished[0].isBonus).toBe(false);
         expect(Database.Measurements).toMatchObject({ questNormal: 1, questBonus: 0 });
+    });
+
+    it('needs a fresh stay time for the next quest in range', () => {
+        const map = fakeQuestMap('', '');
+        const quest = new ActiveQuest(map);
+        const finished = finishQuest(map, quest);
+        expect(finished).toHaveLength(1);
+        expect(map.markers).toHaveLength(1);
+
+        quest.update();                     // the second quest is in range, but the player just arrived
+        expect(finished).toHaveLength(1);
+        expect(quest.getCountdown()).toBe(Settings.Quest.STAY_TIME_SEC);
+
+        vi.advanceTimersByTime(STAY_MS);
+        quest.update();
+        expect(finished).toHaveLength(2);
     });
 });
