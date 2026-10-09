@@ -105,9 +105,9 @@ let Database = {
             });
         },
 
-        // Method to delete a specific measurement by its ID
-        deleteOne: function (id) {
-            Database.db.collection(this.tableName).doc({id: id}).delete();
+        // Method to delete all measurements of one route (one measurement session)
+        deleteRoute: function (route) {
+            return Database.db.collection(this.tableName).doc({route: route}).delete();
         },
 
         // Method to clear all measurements from the database

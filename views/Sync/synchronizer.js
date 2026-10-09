@@ -25,7 +25,6 @@ export default class Synchronizer {
                 if (data == null) {
                     // Create a new entry if it doesn't exist
                     data = {
-                        id: entry.id,
                         mac: entry.mac,
                         measurementsArray: [],
                         questNormal: 0,
@@ -74,10 +73,8 @@ export default class Synchronizer {
                     // Create a new session and process the result
                     await this.#createSession(route, mac, questNormal, questBonus);
 
-                    // Delete measurements from the database once synced
-                    value.measurementsArray.forEach(entry => {
-                        Database.Measurements.deleteOne(entry.id);
-                    })
+                    // Delete the measurements of this route from the database once synced
+                    await Database.Measurements.deleteRoute(route);
                 }
             });
         }
