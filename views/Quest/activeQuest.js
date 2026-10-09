@@ -88,19 +88,18 @@ export default class ActiveQuest extends EventTarget {
         }));
     };
 
-    // Determine if the quest is a bonus quest
+    // Determine if the quest is a bonus quest: one of its measuring times is close to now
     #isBonus() {
-        if (this.#marker.bonusTime.length > 0) {
-            const timesArray = this.#marker.bonusTime.split(",");
-            const timeNow = new Date();
-            timesArray.forEach(targetTime => {
-                if (this.#isWithinInterval(timeNow, targetTime)) {
-                    alert("Bonus quest complete");
-                    return true;
-                }
-            })
+        if (this.#marker.bonusTime.length === 0) {
+            return false;
         }
-        return false;
+        const timesArray = this.#marker.bonusTime.split(",");
+        const timeNow = new Date();
+        const isBonus = timesArray.some(targetTime => this.#isWithinInterval(timeNow, targetTime));
+        if (isBonus) {
+            alert("Bonus quest complete");
+        }
+        return isBonus;
     };
 
     // Check if the current time is within a specific interval of the target time
