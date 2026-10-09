@@ -23,22 +23,23 @@ let ConnectionsDevice = {
         measurement: null,
 
         // Method to establish a connection to the sensor using its IP address
-        connect: function (ip) {
-            let url = "https://" + ip + ":8181/SmartDataSensor/smartdata/system/sysinfo";
-            Http.fetch(url).then(response => {
-                if (response.ok) {
-                    ConnectionsDevice.Sensor.isConnected = true; // Mark sensor as ready for measuring begin
-                    ConnectionsDevice.Sensor.sensorIP = ip;
-                    response.json().then(sysinfo => {
-                        ConnectionsDevice.Sensor.sensorMAC = sysinfo.mac;
-                    })
-                    ConnectionsDevice.GUI.connectionUpdate();
-                } else {
+        connect: async function (ip) {
+            const url = "https://" + ip + ":8181/SmartDataSensor/smartdata/system/sysinfo";
+            try {
+                const response = await Http.fetch(url);
+                if (!response.ok) {
                     alert("connection failed");
+                    return;
                 }
-            }).catch(error => {
+                const sysinfo = await response.json();
+                // Mark sensor as ready for measuring begin, MAC included
+                ConnectionsDevice.Sensor.isConnected = true;
+                ConnectionsDevice.Sensor.sensorIP = ip;
+                ConnectionsDevice.Sensor.sensorMAC = sysinfo.mac;
+                ConnectionsDevice.GUI.connectionUpdate();
+            } catch (error) {
                 alert(error);
-            });
+            }
         },
 
         // Method to start the airquality measurement
