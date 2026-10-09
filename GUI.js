@@ -10,6 +10,7 @@ import ViewRewards from "./views/Rewards/viewRewards.js";
 import ViewSensor from "./views/Sensor/viewSensor.js";
 import ViewSettings from "./views/Settings/viewSettings.js";
 import Settings from "./utilities/settings.js";
+import Config from "./utilities/config.js";
 
 /*
  * The GUI class manages the user interface.
@@ -91,6 +92,9 @@ export default class GUI {
         this.#addListener();
         // Load user settings from the database and then set up connections
         Database.Parameter.loadSettings().then(() => {
+            if (Config.isDemo) {
+                Object.assign(Settings.Quest, Config.demoQuest);
+            }
             this.#setupConnections();
             this.#changeView(this.#viewGame);
         });

@@ -3,6 +3,7 @@ import ConnectionsApi from "../../utilities/connections/api.js";
 import Settings from "../../utilities/settings.js";
 import Database from "../../utilities/database.js";
 import ConnectionsDevice from "../../utilities/connections/device.js";
+import Config from "../../utilities/config.js";
 
 export default class ViewSettings extends View {
 
@@ -29,6 +30,11 @@ export default class ViewSettings extends View {
         this.#btnLoadName = this.html.querySelector('#btnLoadName');
         this.#btnCreateName = this.html.querySelector('#btnCreateName');
         this.#btnStartGame = this.html.querySelector('#btnStartGame');
+
+        if (Config.isDemo) {
+            this.titleContainer.querySelector('h1').textContent = 'Player (Demo)';
+            this.html.querySelector('#demoHint').hidden = false;
+        }
 
         this.#addListener();
     }

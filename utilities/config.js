@@ -18,6 +18,12 @@ const Config = {
 
     // Appended to the names of the local databases
     databaseSuffix: isDemo ? '-demo' : '',
+
+    // Overrides for Settings.Quest in demo mode, so a quest can be finished within seconds
+    demoQuest: {
+        STAY_TIME_SEC: 5,
+        RESPAWN_MIN: 1,
+    },
 };
 
 export default Config;
